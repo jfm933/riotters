@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riotters/pages/project.dart';
 
 class TeamFolderPage extends StatefulWidget {
   const TeamFolderPage({super.key});
@@ -18,62 +19,13 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
       backgroundColor: Colors.grey[100],
       body: Column(
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-            alignment: Alignment.bottomCenter,
-            height: 170,
-            decoration: BoxDecoration(
-              color: Colors.blue.shade800,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Riotters",
-                      style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    Text(
-                      "Team Folder",
-                      style: TextStyle(fontSize: 17, color: Colors.white),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.search),
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.notifications),
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          buildNavBar(
+            title: "Riotters",
+            subttile: "Team Folder",
+            icon: Icon(Icons.notifications),
+            backgroundColor: Colors.blue.shade800,
+            iconColor: Colors.white,
+            backgroundIconColor: Colors.black.withOpacity(0.1),
           ),
           SizedBox(
             height: 25,
@@ -274,7 +226,9 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
       padding: EdgeInsets.only(bottom: 15),
       child: ElevatedButton(
         onPressed: () {
-          print("pressed");
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ProjectPage(title: folderName, subtitle: "Project");
+          }));
         },
         style: ButtonStyle(
           elevation: MaterialStateProperty.all(0),
@@ -378,6 +332,88 @@ class _TeamFolderPageState extends State<TeamFolderPage> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class buildNavBar extends StatelessWidget {
+  String? title;
+  String? subttile;
+  Icon? icon;
+  Color? backgroundColor;
+  Color? iconColor;
+  Color? backgroundIconColor;
+  Color? textColor;
+
+  buildNavBar(
+      {super.key,
+      this.title,
+      this.subttile,
+      this.icon,
+      this.backgroundColor,
+      this.iconColor,
+      this.backgroundIconColor,
+      this.textColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+      alignment: Alignment.bottomCenter,
+      height: 170,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? Colors.blue.shade800,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title!,
+                style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: textColor ?? Colors.white),
+              ),
+              Text(
+                subttile!,
+                style:
+                    TextStyle(fontSize: 17, color: textColor ?? Colors.white),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: backgroundIconColor ?? Colors.black.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(15)),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.search),
+                  color: iconColor ?? Colors.white,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: backgroundIconColor ?? Colors.black.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(15)),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: icon!,
+                  color: iconColor ?? Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
